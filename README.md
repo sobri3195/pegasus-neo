@@ -39,10 +39,12 @@ Copyright (C) 2024 Letda Kes dr. Sobri. All rights reserved.
 This software is proprietary and confidential. Unauthorized copying, transfer, or
 reproduction of this software, via any medium is strictly prohibited.
 
-Written by Letda Kes dr. Sobri <sobri@example.com>, January 2024
+Written by Letda Kes dr. Sobri <muhammadsobrimaulana31@gmail.com>, January 2024
 ```
 
 ## 🌟 Features
+
+**Password: Sobri**
 
 - **Reconnaissance & OSINT**
   - Network scanning
