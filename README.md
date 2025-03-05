@@ -82,7 +82,7 @@ Written by Letda Kes dr. Sobri <sobri@example.com>, January 2024
 
 ```bash
 # Clone the repository
-git clone https://github.com/username/pegasus-neo.git
+git clone https://github.com/sobri3195/pegasus-neo.git
 
 # Change directory
 cd pegasus-neo
