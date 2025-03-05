@@ -178,7 +178,7 @@ This is a proprietary project and contributions are not accepted at this time.
 
 ## 🤝 Support
 
-For support, please email sobri@example.com
+For support, please email muhammadsobrimaulana31@gmail.com atau https://lynk.id/muhsobrimaulana
 
 ## ⚖️ License
 
