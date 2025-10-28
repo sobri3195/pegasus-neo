@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-PEGASUS_ASCII = """
+PEGASUS_ASCII = r"""
                                           /\
                                          /  \
                                         /    \

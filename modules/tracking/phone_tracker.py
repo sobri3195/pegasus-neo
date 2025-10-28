@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 
+import os
 import requests
 import json
 import re
 from rich.console import Console
 from rich.table import Table
+from rich.progress import track
 from datetime import datetime
 from bs4 import BeautifulSoup
 
@@ -13,6 +15,7 @@ console = Console()
 class PhoneTracker:
     def __init__(self):
         self.output_dir = "output/tracking"
+        os.makedirs(self.output_dir, exist_ok=True)
         self.providers = {
             "0811": "Telkomsel", "0812": "Telkomsel", "0813": "Telkomsel", "0821": "Telkomsel", "0822": "Telkomsel",
             "0851": "Telkomsel", "0852": "Telkomsel", "0853": "Telkomsel",

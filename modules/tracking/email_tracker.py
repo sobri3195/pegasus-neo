@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import dns.resolver
 from rich.console import Console
 from rich.table import Table
@@ -12,6 +13,7 @@ console = Console()
 class EmailTracker:
     def __init__(self):
         self.output_dir = "output/tracking"
+        os.makedirs(self.output_dir, exist_ok=True)
         
     def verify_email(self, email):
         """Verify email existence and gather information"""

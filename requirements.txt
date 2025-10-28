@@ -1,0 +1,37 @@
+# PEGASUS-NEO Requirements
+# Python 3.8+ required
+
+# Core UI/Display
+pyfiglet>=0.8.0
+rich>=13.0.0
+
+# Network & Web
+requests>=2.28.0
+python-nmap>=0.7.1
+beautifulsoup4>=4.11.0
+dnspython>=2.2.0
+folium>=0.14.0
+
+# Security & Cryptography
+cryptography>=40.0.0
+
+# Templates
+jinja2>=3.1.0
+
+# Standard library modules (no installation needed)
+# - os
+# - sys
+# - time
+# - logging
+# - datetime
+# - subprocess
+# - hashlib
+# - json
+# - re
+# - smtplib
+# - email
+# - http.server
+# - socketserver
+# - itertools
+# - base64
+# - urllib

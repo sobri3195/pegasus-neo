@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 
+import os
 import requests
 import json
 import folium
 from rich.console import Console
 from rich.table import Table
+from rich.prompt import Prompt
 from datetime import datetime
 
 console = Console()
@@ -13,6 +15,7 @@ class LocationTracker:
     def __init__(self):
         self.api_key = None  # IP Geolocation API key
         self.output_dir = "output/tracking"
+        os.makedirs(self.output_dir, exist_ok=True)
         
     def setup_api(self):
         """Setup API credentials"""
