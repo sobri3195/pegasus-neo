@@ -7,12 +7,14 @@ from rich.table import Table
 from rich.progress import track
 import json
 import os
+from datetime import datetime
 
 console = Console()
 
 class SocialTracker:
     def __init__(self):
         self.output_dir = "output/tracking"
+        os.makedirs(self.output_dir, exist_ok=True)
         self.platforms = {
             "twitter": "https://twitter.com/{}",
             "instagram": "https://instagram.com/{}",
