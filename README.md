@@ -51,34 +51,97 @@ Written by Letda Kes dr. Sobri <muhammadsobrimaulana31@gmail.com>, January 2024
   - Email harvesting
   - Domain enumeration
   - Social media tracking
-  
+
 - **Exploitation & Pentesting**
   - Automated exploitation
   - Password attacks
   - SQL injection
   - Custom payload generation
-  
+
 - **Wireless Attacks**
   - WiFi cracking
   - Evil twin attacks
   - WPS exploitation
-  
+
 - **Web Attacks**
   - Directory scanning
   - XSS detection
   - SQL injection
   - CMS scanning
-  
+
 - **Social Engineering**
   - Phishing templates
   - Email spoofing
   - Credential harvesting
-  
+
 - **Tracking & Analysis**
   - IP geolocation
   - Phone number tracking
   - Email analysis
   - Social media hunting
+
+- **Vulnerability Scanner** ⭐ NEW
+  - Open port scanning
+  - SSL certificate analysis
+  - HTTP security headers check
+  - Comprehensive vulnerability assessment
+
+- **Password Generator** ⭐ NEW
+  - Secure random password generation
+  - Memorable passphrase creation
+  - Password strength analysis
+  - Customizable options
+
+- **Honeytoken Generator** ⭐ NEW
+  - Fake AWS keys
+  - Database URL decoys
+  - API key tokens
+  - Canary token creation
+  - SSH key honeypots
+
+- **Network Sniffer** ⭐ NEW
+  - Packet capture
+  - Protocol analysis
+  - Traffic statistics
+  - Export captures
+
+- **Code Scanner** ⭐ NEW
+  - Security vulnerability detection
+  - Hardcoded credential scanning
+  - Weak encryption identification
+  - SQL injection pattern detection
+
+- **Forensic Analyzer** ⭐ NEW
+  - File hash calculation
+  - Timeline creation
+  - Duplicate file detection
+  - Directory analysis
+
+- **Steganography Tool** ⭐ NEW
+  - Base64 encode/decode
+  - Hex encode/decode
+  - ROT13 cipher
+  - Caesar cipher
+  - Binary encoding
+
+- **Encryption Tool** ⭐ NEW
+  - Fernet encryption
+  - File encryption/decryption
+  - Message encryption/decryption
+  - Hash calculation
+  - Password hashing
+
+- **Log Analyzer** ⭐ NEW
+  - Log file parsing
+  - Apache log analysis
+  - Error extraction
+  - IP activity tracking
+
+- **Port Scanner** ⭐ NEW
+  - Quick common port scan
+  - Full port range scan
+  - Service version detection
+  - Multi-threaded scanning
 
 ## 🔧 Installation
 
@@ -171,6 +234,19 @@ sudo python3 pegasus_neo.py
 - v1.0.0 (2024-01) - Initial release
 - v1.1.0 (2024-02) - Added tracking modules
 - v1.2.0 (2024-03) - Added tool installer
+- v2.0.0 (2025-01) - Major update with 10 new features:
+  - Added Vulnerability Scanner module
+  - Added Password Generator module
+  - Added Honeytoken Generator module
+  - Added Network Sniffer module
+  - Added Code Scanner module
+  - Added Forensic Analyzer module
+  - Added Steganography Tool module
+  - Added Encryption Tool module
+  - Added Log Analyzer module
+  - Added Port Scanner module
+  - Fixed module import errors
+  - Updated dependencies and libraries
 
 ## 👥 Contributing
 

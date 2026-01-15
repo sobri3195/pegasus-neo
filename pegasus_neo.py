@@ -29,6 +29,16 @@ from modules.tracking.email_tracker import EmailTracker
 from modules.tracking.phone_tracker import PhoneTracker
 from modules.security.code_protection import CodeProtection
 from modules.installer.tools_installer import ToolsInstaller
+from modules.vulnerability_scanner import VulnerabilityScanner
+from modules.password_generator import PasswordGenerator
+from modules.honeytoken import HoneytokenGenerator
+from modules.network_sniffer import NetworkSniffer
+from modules.code_scanner import CodeScanner
+from modules.forensic_analyzer import ForensicAnalyzer
+from modules.steganography import SteganographyTool
+from modules.encryption_tool import EncryptionTool
+from modules.log_analyzer import LogAnalyzer
+from modules.port_scanner import PortScanner
 
 # Setup logging
 logging.basicConfig(
@@ -74,7 +84,7 @@ def display_banner():
     console.print(Panel(banner, style="bold cyan"))
     console.print(Panel.fit(get_pegasus_art(), style="bold blue"))
     console.print("\n[bold yellow]Developed by: Letda Kes dr. Sobri[/bold yellow]")
-    console.print("[bold green]Version: 1.0[/bold green]\n")
+    console.print("[bold green]Version: 2.0[/bold green]\n")
 
 def authenticate():
     password = Prompt.ask("🔒 Enter password", password=True)
@@ -102,6 +112,16 @@ def display_menu():
     table.add_row(str(module_start + 2), "Post Exploitation", "Persistence & more")
     table.add_row(str(module_start + 3), "Tracking", "IP Location, Username Search, Email Analysis")
     table.add_row(str(module_start + 4), "Install Tools", "Install hacking tools")
+    table.add_row(str(module_start + 5), "Vulnerability Scanner", "Security vulnerability scanning")
+    table.add_row(str(module_start + 6), "Password Generator", "Generate secure passwords")
+    table.add_row(str(module_start + 7), "Honeytoken Generator", "Create decoy credentials")
+    table.add_row(str(module_start + 8), "Network Sniffer", "Packet capture & analysis")
+    table.add_row(str(module_start + 9), "Code Scanner", "Security code analysis")
+    table.add_row(str(module_start + 10), "Forensic Analyzer", "File & directory forensics")
+    table.add_row(str(module_start + 11), "Steganography Tool", "Encoding & decoding tools")
+    table.add_row(str(module_start + 12), "Encryption Tool", "File & message encryption")
+    table.add_row(str(module_start + 13), "Log Analyzer", "Parse and analyze logs")
+    table.add_row(str(module_start + 14), "Port Scanner", "Advanced port scanning")
     table.add_row("0", "Exit", "Exit program")
     
     console.print(table)
@@ -143,7 +163,17 @@ def initialize_modules():
         "location_tracker": LocationTracker(),
         "social_tracker": SocialTracker(),
         "email_tracker": EmailTracker(),
-        "phone_tracker": PhoneTracker()
+        "phone_tracker": PhoneTracker(),
+        "vulnerability_scanner": VulnerabilityScanner(),
+        "password_generator": PasswordGenerator(),
+        "honeytoken": HoneytokenGenerator(),
+        "network_sniffer": NetworkSniffer(),
+        "code_scanner": CodeScanner(),
+        "forensic_analyzer": ForensicAnalyzer(),
+        "steganography": SteganographyTool(),
+        "encryption_tool": EncryptionTool(),
+        "log_analyzer": LogAnalyzer(),
+        "port_scanner": PortScanner()
     }
     return modules
 
@@ -224,9 +254,9 @@ def handle_module(modules, module_name):
             console.print("6. Install MITM & Sniffing Tools")
             console.print("7. Install Anonymity Tools")
             console.print("8. Install Exploit Development Tools")
-            
+
             choice = Prompt.ask("Select option", choices=["1", "2", "3", "4", "5", "6", "7", "8"])
-            
+
             if choice == "1":
                 installer.install_all()
             else:
@@ -240,6 +270,220 @@ def handle_module(modules, module_name):
                     "8": "Exploit Development"
                 }
                 installer.install_category(categories[choice])
+
+        elif module_name == "Vulnerability Scanner":
+            console.print("\n[cyan]Vulnerability Scanner Options:[/cyan]")
+            console.print("1. Scan Open Ports")
+            console.print("2. Check SSL Certificate")
+            console.print("3. Check HTTP Security Headers")
+            choice = Prompt.ask("Select option", choices=["1", "2", "3"])
+
+            if choice == "1":
+                target = Prompt.ask("Enter target IP or hostname")
+                modules["vulnerability_scanner"].scan_open_ports(target)
+            elif choice == "2":
+                hostname = Prompt.ask("Enter hostname")
+                modules["vulnerability_scanner"].check_ssl_cert(hostname)
+            elif choice == "3":
+                url = Prompt.ask("Enter target URL (e.g., https://example.com)")
+                modules["vulnerability_scanner"].check_http_headers(url)
+
+        elif module_name == "Password Generator":
+            console.print("\n[cyan]Password Generator Options:[/cyan]")
+            console.print("1. Generate Secure Password")
+            console.print("2. Generate Passphrase")
+            console.print("3. Check Password Strength")
+            choice = Prompt.ask("Select option", choices=["1", "2", "3"])
+
+            if choice == "1":
+                length = Prompt.ask("Enter password length", default="16")
+                modules["password_generator"].generate_password(length=int(length))
+            elif choice == "2":
+                word_count = Prompt.ask("Enter word count", default="5")
+                modules["password_generator"].generate_passphrase(word_count=int(word_count))
+            elif choice == "3":
+                password = Prompt.ask("Enter password to check")
+                modules["password_generator"].check_password_strength(password)
+
+        elif module_name == "Honeytoken Generator":
+            console.print("\n[cyan]Honeytoken Generator Options:[/cyan]")
+            console.print("1. Generate AWS Key")
+            console.print("2. Generate Database URL")
+            console.print("3. Generate API Key")
+            console.print("4. Generate Canary Token")
+            console.print("5. Generate SSH Key")
+            choice = Prompt.ask("Select option", choices=["1", "2", "3", "4", "5"])
+
+            token_map = {
+                "1": ("generate_aws_key", "AWS Key"),
+                "2": ("generate_database_url", "Database URL"),
+                "3": ("generate_api_key", "API Key"),
+                "4": ("generate_canary_token", "Canary Token"),
+                "5": ("generate_ssh_key", "SSH Key")
+            }
+            method, name = token_map[choice]
+            token = getattr(modules["honeytoken"], method)()
+            modules["honeytoken"].display_honeytoken(token)
+            modules["honeytoken"].save_honeytoken(token)
+
+        elif module_name == "Network Sniffer":
+            console.print("\n[cyan]Network Sniffer Options:[/cyan]")
+            console.print("1. Start Packet Sniffing")
+            console.print("2. Analyze Captured Traffic")
+            console.print("3. Save Capture")
+            choice = Prompt.ask("Select option", choices=["1", "2", "3"])
+
+            if choice == "1":
+                interface = Prompt.ask("Enter network interface (e.g., eth0)")
+                count = Prompt.ask("Enter number of packets to capture", default="100")
+                modules["network_sniffer"].start_sniffing(interface, int(count))
+            elif choice == "2":
+                modules["network_sniffer"].analyze_traffic()
+            elif choice == "3":
+                modules["network_sniffer"].save_capture()
+
+        elif module_name == "Code Scanner":
+            console.print("\n[cyan]Code Scanner Options:[/cyan]")
+            console.print("1. Scan Directory for Security Issues")
+            console.print("2. Scan for Secrets")
+            choice = Prompt.ask("Select option", choices=["1", "2"])
+
+            directory = Prompt.ask("Enter directory path")
+            if choice == "1":
+                findings = modules["code_scanner"].scan_directory(directory)
+                if findings:
+                    modules["code_scanner"].save_results(findings)
+            elif choice == "2":
+                modules["code_scanner"].scan_for_secrets(directory)
+
+        elif module_name == "Forensic Analyzer":
+            console.print("\n[cyan]Forensic Analyzer Options:[/cyan]")
+            console.print("1. Analyze File")
+            console.print("2. Scan Directory")
+            console.print("3. Find Duplicate Files")
+            console.print("4. Create File Timeline")
+            choice = Prompt.ask("Select option", choices=["1", "2", "3", "4"])
+
+            if choice == "1":
+                filepath = Prompt.ask("Enter file path")
+                modules["forensic_analyzer"].analyze_file(filepath)
+            elif choice == "2":
+                directory = Prompt.ask("Enter directory path")
+                modules["forensic_analyzer"].scan_directory(directory)
+            elif choice == "3":
+                directory = Prompt.ask("Enter directory path")
+                modules["forensic_analyzer"].find_duplicates(directory)
+            elif choice == "4":
+                directory = Prompt.ask("Enter directory path")
+                modules["forensic_analyzer"].create_timeline(directory)
+
+        elif module_name == "Steganography Tool":
+            console.print("\n[cyan]Steganography Tool Options:[/cyan]")
+            console.print("1. Base64 Encode")
+            console.print("2. Base64 Decode")
+            console.print("3. Hex Encode")
+            console.print("4. Hex Decode")
+            console.print("5. ROT13 Encode/Decode")
+            console.print("6. Caesar Cipher")
+            console.print("7. Reverse String")
+            console.print("8. Binary Encode")
+            console.print("9. Binary Decode")
+            choice = Prompt.ask("Select option", choices=["1", "2", "3", "4", "5", "6", "7", "8", "9"])
+
+            message = Prompt.ask("Enter message/text")
+            if choice == "1":
+                modules["steganography"].encode_base64(message)
+            elif choice == "2":
+                modules["steganography"].decode_base64(message)
+            elif choice == "3":
+                modules["steganography"].encode_hex(message)
+            elif choice == "4":
+                modules["steganography"].decode_hex(message)
+            elif choice == "5":
+                modules["steganography"].rot13_encode(message)
+            elif choice == "6":
+                shift = Prompt.ask("Enter shift amount", default="3")
+                modules["steganography"].caesar_cipher(message, int(shift))
+            elif choice == "7":
+                modules["steganography"].reverse_string(message)
+            elif choice == "8":
+                modules["steganography"].binary_encode(message)
+            elif choice == "9":
+                modules["steganography"].binary_decode(message)
+
+        elif module_name == "Encryption Tool":
+            console.print("\n[cyan]Encryption Tool Options:[/cyan]")
+            console.print("1. Generate Encryption Key")
+            console.print("2. Encrypt Message")
+            console.print("3. Decrypt Message")
+            console.print("4. Encrypt File")
+            console.print("5. Decrypt File")
+            console.print("6. Hash File")
+            console.print("7. Create Password Hash")
+            choice = Prompt.ask("Select option", choices=["1", "2", "3", "4", "5", "6", "7"])
+
+            if choice == "1":
+                modules["encryption_tool"].generate_key()
+            elif choice in ["2", "3"]:
+                message = Prompt.ask("Enter message")
+                key = Prompt.ask("Enter encryption key").encode()
+                if choice == "2":
+                    modules["encryption_tool"].encrypt_message(message, key)
+                else:
+                    modules["encryption_tool"].decrypt_message(message.encode(), key)
+            elif choice in ["4", "5"]:
+                filepath = Prompt.ask("Enter file path")
+                key = Prompt.ask("Enter encryption key").encode()
+                if choice == "4":
+                    modules["encryption_tool"].encrypt_file(filepath, key)
+                else:
+                    modules["encryption_tool"].decrypt_file(filepath, key)
+            elif choice == "6":
+                filepath = Prompt.ask("Enter file path")
+                modules["encryption_tool"].hash_file(filepath)
+            elif choice == "7":
+                password = Prompt.ask("Enter password")
+                modules["encryption_tool"].create_password_hash(password)
+
+        elif module_name == "Log Analyzer":
+            console.print("\n[cyan]Log Analyzer Options:[/cyan]")
+            console.print("1. Parse Log File")
+            console.print("2. Analyze Apache Logs")
+            console.print("3. Analyze Errors")
+            console.print("4. Find IP Activity")
+            choice = Prompt.ask("Select option", choices=["1", "2", "3", "4"])
+
+            logfile = Prompt.ask("Enter log file path")
+            if choice == "1":
+                modules["log_analyzer"].parse_log_file(logfile)
+            elif choice == "2":
+                modules["log_analyzer"].analyze_apache_logs(logfile)
+            elif choice == "3":
+                modules["log_analyzer"].analyze_errors(logfile)
+            elif choice == "4":
+                ip = Prompt.ask("Enter IP address to search")
+                modules["log_analyzer"].find_ip_activity(logfile, ip)
+
+        elif module_name == "Port Scanner":
+            console.print("\n[cyan]Port Scanner Options:[/cyan]")
+            console.print("1. Quick Scan (Common Ports)")
+            console.print("2. Full Scan (All Ports)")
+            console.print("3. Detect Service Versions")
+            console.print("4. Save Results")
+            choice = Prompt.ask("Select option", choices=["1", "2", "3", "4"])
+
+            target = Prompt.ask("Enter target IP or hostname")
+            if choice == "1":
+                modules["port_scanner"].quick_scan(target)
+            elif choice == "2":
+                console.print("[red]This may take a while...[/red]")
+                start = Prompt.ask("Start port", default="1")
+                end = Prompt.ask("End port", default="65535")
+                modules["port_scanner"].full_scan(target, int(start), int(end))
+            elif choice == "3":
+                modules["port_scanner"].detect_service_versions(target)
+            elif choice == "4":
+                modules["port_scanner"].save_results(target)
                 
     except Exception as e:
         console.print(f"[bold red]Error in module execution: {str(e)}[/bold red]")
@@ -309,7 +553,10 @@ def main():
             else:
                 # Handle advanced modules
                 module_num = choice_num - len(TOOLS)
-                module_names = ["Social Engineering", "Exploitation", "Post Exploitation", "Tracking", "Install Tools"]
+                module_names = ["Social Engineering", "Exploitation", "Post Exploitation", "Tracking", "Install Tools",
+                              "Vulnerability Scanner", "Password Generator", "Honeytoken Generator", "Network Sniffer",
+                              "Code Scanner", "Forensic Analyzer", "Steganography Tool", "Encryption Tool",
+                              "Log Analyzer", "Port Scanner"]
                 if module_num <= len(module_names):
                     handle_module(modules, module_names[module_num-1])
                 else:
