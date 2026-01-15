@@ -11,12 +11,27 @@ python-nmap>=0.7.1
 beautifulsoup4>=4.11.0
 dnspython>=2.2.0
 folium>=0.14.0
+dnslib>=0.9.24
 
 # Security & Cryptography
 cryptography>=40.0.0
+passlib>=1.7.4
 
 # Templates
 jinja2>=3.1.0
+
+# Data Processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# HTTP/SSL
+urllib3>=2.0.0
+
+# Encoding/Decoding
+chardet>=5.0.0
+
+# Hash Algorithms
+hashlib
 
 # Standard library modules (no installation needed)
 # - os
@@ -35,3 +50,10 @@ jinja2>=3.1.0
 # - itertools
 # - base64
 # - urllib
+# - socket
+# - ssl
+# - struct
+# - secrets
+# - string
+# - concurrent.futures
+

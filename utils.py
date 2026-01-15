@@ -19,12 +19,19 @@ def check_dependencies():
         "sqlmap", "aircrack-ng", "kismet", "wireshark",
         "burpsuite", "hydra", "hashcat"
     ]
-    
+
     missing_tools = []
     for tool in required_tools:
         if os.system(f"which {tool} > /dev/null 2>&1") != 0:
             missing_tools.append(tool)
-    
+
+    # Optional: show warning if tools missing but continue
+    if missing_tools:
+        from rich.console import Console
+        console = Console()
+        console.print(f"[yellow]Warning: Some tools may not be installed: {', '.join(missing_tools)}[/yellow]")
+        console.print("[yellow]Some features may not work properly. Install tools from the Install Tools menu.[/yellow]")
+
     return missing_tools
 
 def hash_password(password):
