@@ -3,6 +3,7 @@
 import os
 import sys
 import hashlib
+import shutil
 from rich.progress import Progress
 from time import sleep
 
@@ -15,14 +16,14 @@ def check_root():
 def check_dependencies():
     """Check if required tools are installed"""
     required_tools = [
-        "nmap", "theHarvester", "metasploit-framework",
+        "nmap", "theHarvester", "msfconsole",
         "sqlmap", "aircrack-ng", "kismet", "wireshark",
         "burpsuite", "hydra", "hashcat"
     ]
 
     missing_tools = []
     for tool in required_tools:
-        if os.system(f"which {tool} > /dev/null 2>&1") != 0:
+        if shutil.which(tool) is None:
             missing_tools.append(tool)
 
     # Optional: show warning if tools missing but continue

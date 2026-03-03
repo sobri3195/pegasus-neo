@@ -39,6 +39,7 @@ from modules.steganography import SteganographyTool
 from modules.encryption_tool import EncryptionTool
 from modules.log_analyzer import LogAnalyzer
 from modules.port_scanner import PortScanner
+from cryptography.fernet import Fernet
 
 # Setup logging
 logging.basicConfig(
@@ -48,6 +49,37 @@ logging.basicConfig(
 )
 
 console = Console()
+
+
+def ask_int(prompt, default=None, min_value=None, max_value=None):
+    """Ask for integer input with retry and bounds validation."""
+    while True:
+        value = Prompt.ask(prompt, default=str(default) if default is not None else None)
+        try:
+            num = int(value)
+        except ValueError:
+            console.print("[red]Input harus berupa angka.[/red]")
+            continue
+
+        if min_value is not None and num < min_value:
+            console.print(f"[red]Nilai minimum adalah {min_value}.[/red]")
+            continue
+        if max_value is not None and num > max_value:
+            console.print(f"[red]Nilai maksimum adalah {max_value}.[/red]")
+            continue
+
+        return num
+
+
+def ask_fernet_key(prompt="Enter encryption key"):
+    """Get and validate Fernet key input before operation."""
+    while True:
+        key = Prompt.ask(prompt).strip().encode()
+        try:
+            Fernet(key)
+            return key
+        except Exception:
+            console.print("[red]Kunci tidak valid. Gunakan key dari menu Generate Encryption Key.[/red]")
 
 # Tools dictionary
 TOOLS = {
@@ -87,8 +119,8 @@ def display_banner():
     console.print("[bold green]Version: 2.0[/bold green]\n")
 
 def authenticate():
-    password = Prompt.ask("🔒 Enter password", password=True)
-    if password != "sobri":
+    password = Prompt.ask("🔒 Enter password", password=True).strip()
+    if password.lower() != "sobri":
         console.print("[bold red]❌ Authentication failed! Access denied.[/bold red]")
         logging.warning("Failed authentication attempt")
         sys.exit(1)
@@ -296,11 +328,11 @@ def handle_module(modules, module_name):
             choice = Prompt.ask("Select option", choices=["1", "2", "3"])
 
             if choice == "1":
-                length = Prompt.ask("Enter password length", default="16")
-                modules["password_generator"].generate_password(length=int(length))
+                length = ask_int("Enter password length", default=16, min_value=4, max_value=256)
+                modules["password_generator"].generate_password(length=length)
             elif choice == "2":
-                word_count = Prompt.ask("Enter word count", default="5")
-                modules["password_generator"].generate_passphrase(word_count=int(word_count))
+                word_count = ask_int("Enter word count", default=5, min_value=2, max_value=20)
+                modules["password_generator"].generate_passphrase(word_count=word_count)
             elif choice == "3":
                 password = Prompt.ask("Enter password to check")
                 modules["password_generator"].check_password_strength(password)
@@ -335,8 +367,8 @@ def handle_module(modules, module_name):
 
             if choice == "1":
                 interface = Prompt.ask("Enter network interface (e.g., eth0)")
-                count = Prompt.ask("Enter number of packets to capture", default="100")
-                modules["network_sniffer"].start_sniffing(interface, int(count))
+                count = ask_int("Enter number of packets to capture", default=100, min_value=1, max_value=100000)
+                modules["network_sniffer"].start_sniffing(interface, count)
             elif choice == "2":
                 modules["network_sniffer"].analyze_traffic()
             elif choice == "3":
@@ -402,8 +434,8 @@ def handle_module(modules, module_name):
             elif choice == "5":
                 modules["steganography"].rot13_encode(message)
             elif choice == "6":
-                shift = Prompt.ask("Enter shift amount", default="3")
-                modules["steganography"].caesar_cipher(message, int(shift))
+                shift = ask_int("Enter shift amount", default=3, min_value=-1000, max_value=1000)
+                modules["steganography"].caesar_cipher(message, shift)
             elif choice == "7":
                 modules["steganography"].reverse_string(message)
             elif choice == "8":
@@ -426,14 +458,14 @@ def handle_module(modules, module_name):
                 modules["encryption_tool"].generate_key()
             elif choice in ["2", "3"]:
                 message = Prompt.ask("Enter message")
-                key = Prompt.ask("Enter encryption key").encode()
+                key = ask_fernet_key("Enter encryption key")
                 if choice == "2":
                     modules["encryption_tool"].encrypt_message(message, key)
                 else:
                     modules["encryption_tool"].decrypt_message(message.encode(), key)
             elif choice in ["4", "5"]:
                 filepath = Prompt.ask("Enter file path")
-                key = Prompt.ask("Enter encryption key").encode()
+                key = ask_fernet_key("Enter encryption key")
                 if choice == "4":
                     modules["encryption_tool"].encrypt_file(filepath, key)
                 else:
@@ -477,9 +509,9 @@ def handle_module(modules, module_name):
                 modules["port_scanner"].quick_scan(target)
             elif choice == "2":
                 console.print("[red]This may take a while...[/red]")
-                start = Prompt.ask("Start port", default="1")
-                end = Prompt.ask("End port", default="65535")
-                modules["port_scanner"].full_scan(target, int(start), int(end))
+                start = ask_int("Start port", default=1, min_value=1, max_value=65535)
+                end = ask_int("End port", default=65535, min_value=start, max_value=65535)
+                modules["port_scanner"].full_scan(target, start, end)
             elif choice == "3":
                 modules["port_scanner"].detect_service_versions(target)
             elif choice == "4":
@@ -504,10 +536,10 @@ def main():
     # Check dependencies
     missing_tools = check_dependencies()
     if missing_tools:
-        console.print("[bold red]Missing required tools:[/bold red]")
+        console.print("[bold yellow]Missing external tools detected. Advanced external commands may be unavailable:[/bold yellow]")
         for tool in missing_tools:
-            console.print(f"[red]- {tool}[/red]")
-        sys.exit(1)
+            console.print(f"[yellow]- {tool}[/yellow]")
+        logging.warning(f"Missing tools: {', '.join(missing_tools)}")
     
     # Show loading animation
     show_loading_animation()
